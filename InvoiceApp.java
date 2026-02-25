@@ -16,25 +16,24 @@ public class InvoiceApp {
             double subtotal = Double.parseDouble(sc.nextLine());
 
             // get the discount percent
-            double discountPercent = switch(customerType) {
-                case "r", "R" -> {
-                    if (subtotal >= 250) {
-                        yield .2;
-                    } else if (subtotal >= 100) {
-                        yield .1;
-                    } else {  
-                        yield 0.0;
-                    } 
+            double discountPercent = 0.0;
+            if (customerType.equalsIgnoreCase("r")) {
+                if (subtotal >= 250) {
+                    discountPercent = .2;
+                } else if (subtotal >= 100) {
+                    discountPercent = .1;
+                } else {
+                    discountPercent = 0.0;
                 }
-                case "c", "C" -> {
-                    if (subtotal >= 250) {
-                        yield .3;
-                    } else {
-                        yield .2;
-                    }
+            } else if (customerType.equalsIgnoreCase("c")) {
+                if (subtotal >= 250) {
+                    discountPercent = .3;
+                } else {
+                    discountPercent = .2;
                 }
-                default -> .1;
-            };
+            } else {
+                discountPercent = .1;
+            }
 
             // calculate the discount amount and round to 2 decimals
             double discountAmount = subtotal * discountPercent;
